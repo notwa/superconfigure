@@ -1,0 +1,10 @@
+--- -------------/src/application.c
++++ kissat-master/src/application.c
+@@ -13,6 +13,7 @@
+ 
+ #include <inttypes.h>
+ #include <string.h>
++#include <time.h>
+ #include <unistd.h>
+ 
+ #define SOLVER_NAME "Kissat SAT Solver"

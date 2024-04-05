@@ -1,0 +1,11 @@
+#!/bin/sh
+set -e
+
+src=$(printf %s "$BASELOC/o/cli/kissat/kissat-"*)
+
+printf %s\\n \
+'# [configured]' \
+"SRC = $src" \
+"prefix = $COSMOS" \
+'# [/configured]' \
+| cat - "$BASELOC/cli/kissat/custom.mk" > Makefile

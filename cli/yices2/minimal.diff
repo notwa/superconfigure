@@ -1,0 +1,115 @@
+--- -------------/src/Makefile
++++ yices2-master/src/Makefile
+@@ -1085,7 +1085,6 @@
+ 	-Wl,-soname,$(libyices_soname) -Wl,--no-undefined \
+ 	$(base_obj) $(version_obj) $(LIBS) -lc
+ ifeq ($(YICES_MODE),release)
+-	$(STRIP) -x $@
+ endif
+ 
+ $(static_libdir)/$(libyices_so): $(base_obj) $(version_obj)
+@@ -1093,7 +1092,6 @@
+ 	-Wl,-soname,$(libyices_soname) -Wl,--no-undefined \
+ 	$(base_obj) $(version_obj) $(PIC_LIBS) -lc
+ ifeq ($(YICES_MODE),release)
+-	$(STRIP) -x $@
+ endif
+ 
+ #
+@@ -1116,7 +1114,6 @@
+ 	-Wl,--no-undefined \
+ 	$(base_obj) $(version_obj) $(LIBS)
+ ifeq ($(YICES_MODE),release)
+-	$(STRIP) $@
+ endif
+ 
+ $(static_bindir)/$(libyices_dll): $(static_dll_base_obj) $(static_dll_version_obj)
+@@ -1125,7 +1122,6 @@
+ 	-Wl,--no-undefined \
+ 	$(static_dll_base_obj) $(static_dll_version_obj) $(PIC_LIBS)
+ ifeq ($(YICES_MODE),release)
+-	$(STRIP) -x $@
+ endif
+ 
+ 
+@@ -1149,7 +1145,6 @@
+ 	-Wl,--no-undefined \
+ 	$(base_obj) $(version_obj) $(LIBS)
+ ifeq ($(YICES_MODE),release)
+-	$(STRIP) $@
+ endif
+ 
+ $(static_bindir)/$(libyices_mingw_dll): $(static_dll_base_obj) $(static_dll_version_obj)
+@@ -1159,7 +1154,6 @@
+ 	-Wl,--no-undefined \
+ 	$(static_dll_base_obj) $(static_dll_version_obj) $(PIC_LIBS)
+ ifeq ($(YICES_MODE),release)
+-	$(STRIP) -x $@
+ endif
+ 
+ 
+@@ -1180,7 +1174,6 @@
+ 	-Wl,-dead_strip \
+ 	$(base_obj) $(version_obj) $(LIBS)
+ ifeq ($(YICES_MODE),release)
+-	$(STRIP) -x $@
+ endif
+ 
+ $(static_libdir)/$(libyices_dylib): $(static_base_obj) $(static_version_obj)
+@@ -1192,7 +1185,6 @@
+ 	-Wl,-dead_strip \
+ 	$(static_base_obj) $(static_version_obj) $(PIC_LIBS)
+ ifeq ($(YICES_MODE),release)
+-	$(STRIP) -x $@
+ endif
+ 
+ # All objects
+@@ -1208,7 +1200,7 @@
+ # Libraries
+ lib: $(libyices) $(libyices_dynamic)
+ 
+-static-lib: $(static_libyices) $(static_libyices_dynamic)
++static-lib: $(static_libyices)
+ 
+ 
+ .PHONY: obj static-obj bin static-bin lib static-lib
+@@ -1240,14 +1232,9 @@
+ 	cp $(bindir)/yices_smtcomp$(EXEEXT) $(distdir)/bin/yices-smt$(EXEEXT)
+ 	cp $(bindir)/yices_smt2$(EXEEXT) $(distdir)/bin/yices-smt2$(EXEEXT)
+ 	cp $(bindir)/yices_sat$(EXEEXT) $(distdir)/bin/yices-sat$(EXEEXT)
+-	cp $(bindir)/*.dll $(distdir)/bin || true
+ 	mkdir $(distdir)/lib
+ 	cp $(libdir)/* $(distdir)/lib
+ ifneq ($(YICES_MODE),debug)
+-	$(STRIP) $(STRIPFLAGS) $(distdir)/bin/yices$(EXEEXT)
+-	$(STRIP) $(STRIPFLAGS) $(distdir)/bin/yices-smt$(EXEEXT)
+-	$(STRIP) $(STRIPFLAGS) $(distdir)/bin/yices-smt2$(EXEEXT)
+-	$(STRIP) $(STRIPFLAGS) $(distdir)/bin/yices-sat$(EXEEXT)
+ endif
+ 
+ static-dist: static-bin static-lib
+@@ -1259,14 +1246,9 @@
+ 	cp $(static_bindir)/yices_smtcomp$(EXEEXT) $(static_distdir)/bin/yices-smt$(EXEEXT)
+ 	cp $(static_bindir)/yices_smt2$(EXEEXT) $(static_distdir)/bin/yices-smt2$(EXEEXT)
+ 	cp $(static_bindir)/yices_sat$(EXEEXT) $(static_distdir)/bin/yices-sat$(EXEEXT)
+-	cp $(static_bindir)/*.dll $(static_distdir)/bin || true
+ 	mkdir $(static_distdir)/lib
+ 	cp $(static_libdir)/* $(static_distdir)/lib
+ ifneq ($(YICES_MODE),debug)
+-	$(STRIP) $(STRIPFLAGS) $(static_distdir)/bin/yices$(EXEEXT)
+-	$(STRIP) $(STRIPFLAGS) $(static_distdir)/bin/yices-smt$(EXEEXT)
+-	$(STRIP) $(STRIPFLAGS) $(static_distdir)/bin/yices-smt2$(EXEEXT)
+-	$(STRIP) $(STRIPFLAGS) $(static_distdir)/bin/yices-sat$(EXEEXT)
+ endif
+ 
+ 
+--- -------------/src/utils/timeout.c
++++ yices2-master/src/utils/timeout.c
+@@ -119,6 +119,7 @@
+  *  UNIX/C99 IMPLEMENTATION  *
+  ****************************/
+ 
++#include <time.h>
+ #include <unistd.h>
+ #include <signal.h>
+ #include <stdio.h>
