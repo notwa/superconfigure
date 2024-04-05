@@ -1,7 +1,8 @@
 #!/bin/sh
 set -e
 
-"$BASELOC"/o/web/yices2/yices2*/configure --prefix="$COSMOS"\
+cp -r "$BASELOC"/o/cli/yices2/yices2-*/* .
+./configure --prefix="$COSMOS" \
     CFLAGS="-O3 -g" \
     CPPFLAGS="-I$COSMOS/include/kissat -DHAVE_KISSAT" \
     LDFLAGS="-L$COSMOS/lib" \
