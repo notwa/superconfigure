@@ -85,5 +85,5 @@ install:
 	for d in $(bindir) $(includedir) $(libdir); do $(INSTALL) -d $(DESTDIR)"$$d" || exit; done
 	for f in $(INCS); do $(INSTALL_DATA) "$$f" $(DESTDIR)$(includedir)/ || exit; done
 	for f in $(BINS); do $(INSTALL_PROGRAM) "$$f" $(DESTDIR)$(bindir)/ || exit; done
-	for f in $(SHARED_LIBS); do $(INSTALL_PROGRAM) "$$f" $(DESTDIR)$(bindir)/ || exit; done
+	for f in $(SHARED_LIBS); do $(INSTALL_PROGRAM) "$$f" $(DESTDIR)$(libdir)/ || exit; done
 	for f in $(STATIC_LIBS); do $(INSTALL_DATA) "$$f" $(DESTDIR)$(libdir)/ || exit; done
