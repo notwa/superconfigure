@@ -6,4 +6,4 @@ $(eval $(call DOWNLOAD_SOURCE,cli/kissat,$(KISSAT_SRC)))
 o/cli/kissat/configured.x86_64: CONFIG_COMMAND = $(BASELOC)/cli/kissat/configure
 o/cli/kissat/configured.aarch64: CONFIG_COMMAND = $(BASELOC)/cli/kissat/configure
 
-o/cli/kissat/built.fat: BINS = kissat
+o/cli/kissat/built.fat: BINS = kissat kitten

@@ -1,8 +1,8 @@
 # TODO: automatically handle header dependencies.
 
 ARFLAGS := rcsD
-CFLAGS ?= -Wall -O3 -DNDEBUG
-LDLIBS ?= -lm
+CFLAGS := $(CFLAGS) -Wall -O3 -DNDEBUG
+LDLIBS := $(LDFLAGS) -lm
 
 BIN ?= ./bin
 INC ?= ./include
@@ -15,7 +15,7 @@ OBJS := $(patsubst $(SRC)/%.c,$(OBJ)/%.o,$(wildcard $(SRC)/*.c))
 BIN_OBJS := $(addprefix $(OBJ)/,main.o application.o handle.o parse.o witness.o)
 LIB_OBJS := $(filter-out $(BIN_OBJS),$(OBJS))
 
-BINS = $(BIN)/kissat
+BINS = $(BIN)/kissat $(BIN)/kitten
 INCS = $(INC)/kissat.h
 SHARED_LIBS =
 STATIC_LIBS = $(LIB)/libkissat.a
@@ -40,7 +40,12 @@ all: $(BINS) $(INCS) $(SHARED_LIBS) $(STATIC_LIBS)
 
 $(BIN)/kissat: $(BIN_OBJS) $(LIB)/libkissat.a | $(BIN)
 	$(CC) $(LDFLAGS) -o $@ $^ $(LDLIBS)
-GARBAGE += $(BIN)/KISSAT
+GARBAGE += $(BIN)/kissat
+
+$(BIN)/kitten: CFLAGS := $(CFLAGS) -DSTAND_ALONE_KITTEN
+$(BIN)/kitten: $(SRC)/kitten.c | $(BIN)
+	$(CC) $(CPPFLAGS) $(CFLAGS) $(LDFLAGS) -o $@ $^ $(LDLIBS)
+GARBAGE += $(BIN)/kitten
 
 $(LIB)/libkissat.a: $(LIB_OBJS) | $(LIB)
 	$(AR) $(ARFLAGS) $@ $^
