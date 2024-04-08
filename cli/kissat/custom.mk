@@ -2,7 +2,7 @@
 
 ARFLAGS := rcsD
 CFLAGS := $(CFLAGS) -Wall -O3 -DNDEBUG
-LDLIBS := $(LDFLAGS) -lm
+LDLIBS := $(LDLIBS) -lm
 
 BIN ?= ./bin
 INC ?= ./include
