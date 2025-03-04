@@ -1,5 +1,5 @@
 
-KISSAT_SRC := https://github.com/arminbiere/kissat/archive/refs/heads/master.tar.gz
+KISSAT_SRC := https://github.com/arminbiere/kissat/archive/refs/tags/rel-4.0.2.tar.gz
 
 $(eval $(call DOWNLOAD_SOURCE,solver/kissat,$(KISSAT_SRC)))
 
