@@ -24,7 +24,6 @@ include web/BUILD.mk
 include python/BUILD.mk
 include gui/BUILD.mk
 include lang/BUILD.mk
-include solver/BUILD.mk
 
 # recipe for cosmos
 include cosmo-repo/cosmos.mk
