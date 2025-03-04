@@ -10,23 +10,21 @@ binary using Cosmopolitan Libc's `apelink` program.
 # What's included in the build
 The built software is split into the following zip files:  
 **compress.zip**  
-contains `tar`, `zip`, `unzip`, `bzip2`, `zstd`, `xz`, `brotli`, `gzip`, and `pigz`.  
+contains `tar`, `zip`, `unzip`, `bzip2`, `zstd`, `xz`, `brotli`, `gzip`.  
 **cli.zip**  
 contains `bash`, `zsh`, `grep`, `less`, `lua`, `find`, GNU coreutils, and `ninja`.  
 **editor.zip**  
 contains `vim`, `nano`, and `emacs`.  
 **x86_64-gcc.zip**  
-contains the `gcc-12.3` and `binutils-2.42` tools targeting (x86-64-linux-cosmo).  
+contains the `gcc-14.1` and `binutils-2.42` tools targeting (x86-64-linux-cosmo).  
 **aarch64-gcc.zip**  
-contains the `gcc-12.3` and `binutils-2.42` tools targeting (aarch64-linux-cosmo).  
+contains the `gcc-14.1` and `binutils-2.42` tools targeting (aarch64-linux-cosmo).  
 **datasette.zip**  
 contains `datasette` a build of CPython 3.11 with the datasette library.  
 **pypack1.zip**  
 contains `python`, a build of CPython 3.11 with a bunch of cli libraries like `black`, `cookiecutter`.  
-**gui.zip**  
-contains SDL2 test binaries built with `libX11` (experimental, requires X Server to be running on the host system).  
 **lang.zip**  
-contains languages [`berry`](https://berry-lang.github.io/), [`janet`](https://janet-lang.org/), [`lua`](https://www.lua.org/), [`php`](https://www.php.net/).  
+contains languages [`berry`](https://berry-lang.github.io/), [`janet`](https://janet-lang.org/), [`lua`](https://www.lua.org/), [`php`](https://www.php.net/), and Python 3.12.
 
 # Where can I download the built software?
 
@@ -42,10 +40,10 @@ If you'd like to add your own software build scripts, submit a PR! Read up
 
 # How can I build these locally?
 
-The build scripts assume Debian/Ubuntu, and also use things like `bash`, `find`,
-`wget`, `git`, GNU `make`, `patch`, `cp`, `mkdir` etc. (you also need sudo
-access to setup a `/zip` folder).  You can follow the steps in
-`.github/workflows/release.yml` on your machine:
+The build scripts assume Debian/Ubuntu, and also use things like `bash`,
+`find`, `wget`, `cat`, `sed`, `git`, GNU `make`, `patch`, `cp`, `mkdir` etc.
+(you also need sudo access to setup a `/zip` folder).  You can follow the steps
+in `.github/workflows/release.yml` on your machine:
 
 - clone this repository
 - create a folder `/zip` on your system that provides read/write access to

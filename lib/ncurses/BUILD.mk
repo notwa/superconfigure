@@ -1,4 +1,3 @@
-
 NCURSES_SRC := https://ftp.gnu.org/gnu/ncurses/ncurses-6.4.tar.gz
 
 NCURSES_CONFIG_ARGS = --without-libtool --without-shared\
@@ -9,7 +8,6 @@ NCURSES_CONFIG_ARGS = --without-libtool --without-shared\
     --with-curses-h --disable-stripping --enable-widec\
     --disable-lib-suffixes\
     --prefix=$$(COSMOS)\
-    --sysconfdir=/zip --datarootdir=/zip/usr/share\
     CFLAGS="-Os"
 
 

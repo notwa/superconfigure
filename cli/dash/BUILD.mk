@@ -4,6 +4,8 @@ DASH_CONFIG_ARGS = --enable-static --disable-lineno\
 				   --without-libedit\
 				   --prefix=$$(COSMOS)
 
+o/cli/dash/checked: CHECK_COMMAND = $(DUMMYLINK0)
+
 o/cli/dash/downloaded: \
 	DL_COMMAND = rm -rf dash &&\
 		git clone --quiet --depth=1 git://git.kernel.org/pub/scm/utils/dash/dash.git
@@ -12,7 +14,7 @@ o/cli/dash/patched: PATCH_COMMAND = $(PATCH_DEFAULT)
 o/cli/dash/patched: PATCH_FILE = $(BASELOC)/cli/dash/minimal.diff
 
 o/cli/dash/setup: o/cli/dash/patched
-	cd o/cli/dash/dash* && ./autogen.sh
+	cd o/cli/dash/dash* && ./autogen.sh $(ERRLOG)
 	touch $@
 
 o/cli/dash/configured.x86_64: o/cli/dash/setup

@@ -1,0 +1,9 @@
+#!/bin/sh
+
+set -e
+
+mkdir -p "$COSMOS"/share/nh
+mkdir -p "$COSMOS"/games/nh
+
+cp -r "$BASELOC"/o/games/nethack/NetHack*/* ./
+sh sys/unix/setup.sh sys/unix/hints/linux

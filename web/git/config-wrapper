@@ -4,22 +4,22 @@ set -e
 alias strip="$STRIP"
 alias ar="$AR"
 
-export CURL_LDFLAGS="-lcurl -lbrotlidec -lbrotlienc -lbrotlicommon -lssh2 -lzstd -lssl -lcrypto -lz"
+export CURL_LDFLAGS="-lcurl -lpsl -lbrotlidec -lbrotlienc -lbrotlicommon -lssh2 -lzstd -lssl -lcrypto -lz"
 export CSPRNG_METHOD="getrandom"
 export NO_PERL=1
 export NO_POLL=1
 export NO_PYTHON=1
 export SHELL_PATH="sh"
-export LIBS="-lcurl -lbrotlidec -lbrotlienc -lbrotlicommon -lssh2 -lzstd -lssl -lcrypto -lz"
+export LIBS="-lcurl -lpsl -lbrotlidec -lbrotlienc -lbrotlicommon -lssh2 -lzstd -lssl -lcrypto -lz"
 
 cp -r "$BASELOC"/o/web/git/git*/* .
 
 ./configure --prefix="$COSMOS"\
     --with-curl --with-openssl --enable-pthreads="-lpthread"\
     --without-tcltk --without-python \
-    --sysconfdir=/zip/etc --datarootdir=/zip/usr/share\
+    --sysconfdir="$COSMOS/etc" --datarootdir="$COSMOS/share"\
     --with-pager=less --with-editor=vim  --with-shell=sh\
-    --with-gitconfig=/zip/gitconfig --with-gitattributes=/zip/gitattributes\
+    --with-gitconfig="$COSMOS/gitconfig" --with-gitattributes="$COSMOS/gitattributes"\
     --with-sane-tool-path=""\
    CFLAGS="-Os" LDFLAGS="-L$COSMOS/lib" 
 

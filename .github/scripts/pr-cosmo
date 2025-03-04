@@ -1,0 +1,42 @@
+#!/bin/sh
+set -eux
+
+COSMOCC_VERSION=${1:-"4.0.2"}
+URL1="https://github.com/jart/cosmopolitan/releases/download/${COSMOCC_VERSION}/cosmocc-${COSMOCC_VERSION}.zip"
+
+echo "Initial Setup"
+export BASELOC="$PWD"
+export COSMO="${COSMO:-$BASELOC/cosmopolitan}"
+export RESULTS="${RESULTS:-$BASELOC/results}"
+
+# create the COSMOS and related folders
+cd "$BASELOC"
+mkdir -p "$BASELOC"/cosmos
+mkdir -p "$RESULTS"/bin
+for arch in x86_64 aarch64; do
+    mkdir -p "$BASELOC"/cosmos/$arch
+    cd "$BASELOC"/cosmos/$arch
+    mkdir -p include bin lib libexec share x86_64 aarch64
+done
+cd "$BASELOC"
+
+if [ -z ${GITHUB_ACTIONS+x} ]; then 
+    # we are not on GA
+    if [ $(nproc) -gt 2 ]; then
+        numproc=$(($(nproc) - 2))
+    else
+        numproc=1
+    fi
+else 
+    # we are on GA
+    numproc=2
+fi
+
+cd "$COSMO"
+# make calls download-cosmocc.sh, which writes to .cosmocc
+make V=0 -s -j$numproc o//tool/build
+make m=x86_64 V=0 -s -j$numproc o/x86_64/ape
+make m=aarch64 V=0 -s -j$numproc o/aarch64/ape
+
+cd "$COSMO"
+ln -sf .cosmocc/current cosmocc

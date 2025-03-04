@@ -5,8 +5,8 @@ LIBSSH2_CONFIG_ARGS = --enable-static --disable-shared\
     --with-crypto=openssl --with-libssl-prefix=$$(COSMOS)/lib\
     --without-pic --with-gnu-ld --disable-rpath\
     --disable-tests --disable-examples-build --disable-werror\
-    --prefix=$$(COSMOS) --sysconfdir=/zip/etc --datarootdir=/zip/usr/share\
-    CFLAGS="-Os"
+    --prefix=$$(COSMOS) --sysconfdir=$$(COSMOS)/etc --datarootdir=$$(COSMOS)/share\
+    CFLAGS="-Os -Wno-implicit-function-declaration"
 
 $(eval $(call DOWNLOAD_SOURCE,lib/libssh2,$(LIBSSH2_SRC)))
 $(eval $(call SPECIFY_DEPS,lib/libssh2,lib/openssl))

@@ -1,7 +1,7 @@
 ALSA_SRC := https://github.com/alsa-project/alsa-lib/archive/refs/tags/v1.2.11.tar.gz
 
 ALSA_CONFIG_ARGS = --enable-static --disable-shared\
-    --sysconfdir=/zip/etc --datarootdir=/zip/usr/share\
+    --sysconfdir=$$(COSMOS)/etc --datarootdir=$$(COSMOS)/share\
 	--disable-aload --disable-mixer \
 	--disable-pcm --disable-rawmidi \
 	--disable-hwdep --disable-seq \
@@ -13,7 +13,7 @@ $(eval $(call DOWNLOAD_SOURCE,lib/alsa,$(ALSA_SRC)))
 $(eval $(call AUTOTOOLS_BUILD,lib/alsa,$(ALSA_CONFIG_ARGS),$(ALSA_CONFIG_ARGS)))
 
 o/lib/alsa/setup: o/lib/alsa/patched
-	cd $(BASELOC)/o/lib/alsa/alsa* && autoreconf -fi
+	cd $(BASELOC)/o/lib/alsa/alsa* && autoreconf -fi $(ERRLOG)
 	touch $@
 
 o/lib/alsa/configured.x86_64: o/lib/alsa/setup

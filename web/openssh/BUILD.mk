@@ -3,7 +3,8 @@ OPENSSH_SRC := https://github.com/openssh/openssh-portable/archive/refs/tags/V_9
 OPENSSH_DEPS := lib/openssl cosmo-repo/base
 
 OPENSSH_CONFIG_ARGS = --prefix=$$(COSMOS) \
-	--sysconfdir=/zip/etc/openssh \
+	--sysconfdir=$$(COSMOS)/etc/openssh \
+    --with-zlib=$$(COSMOS) \
     --disable-strip --disable-etc-default-login \
     --disable-fd-passing --disable-lastlog \
     --disable-utmp --disable-utmpx \
@@ -21,7 +22,7 @@ OPENSSH_CONFIG_ARGS = --prefix=$$(COSMOS) \
 
 o/web/openssh/setup: o/web/openssh/patched
 	cd $(BASELOC)/o/web/openssh/openssh*/ && \
-		autoreconf -fi
+		autoreconf -fi $(ERRLOG)
 	touch $@
 
 o/web/openssh/configured.x86_64: o/web/openssh/setup

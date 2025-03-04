@@ -10,7 +10,9 @@ export ZIPCOPY:=$(COSMO)/o/tool/build/zipcopy
 export APELINK:=$(COSMO)/o/tool/build/apelink
 
 # basic functions
-include config/common.mk
+include config/variables.mk
+include config/errlog.mk
+include config/rules.mk
 include config/functions.mk
 
 # recipes for each subfolder
@@ -20,6 +22,7 @@ include cli/BUILD.mk
 include compiler/BUILD.mk
 include compress/BUILD.mk
 include editor/BUILD.mk
+include games/BUILD.mk
 include web/BUILD.mk
 include python/BUILD.mk
 include gui/BUILD.mk
@@ -31,17 +34,19 @@ include cosmo-repo/cosmos.mk
 # custom recipes here
 include custom.mk
 
-zipclean:
-	find /zip -mindepth 1 -delete
+clean-results:
+	echo "removing APE binaries in the results/ folder"
+	rm -rf results/bin results/libexec
 
-clean: zipclean
+clean-cosmos:
+	echo "removing files from cosmos"
+	find cosmos -type f -delete
+
+clean: clean-cosmos clean-results
+	echo "removing the o/ folder"
 	rm -rf o/
-	find cosmos -type f -delete
-	rm -rf results/bin results/libexec
 
-build-clean: zipclean
-	find cosmos -type f -delete
-	rm -rf results/bin results/libexec
+build-clean: clean-cosmo clean-results
 	find o -name 'x86_64' | grep 'build/x86_64' | xargs rm -rf
 	find o -name 'aarch64' | grep 'build/aarch64' | xargs rm -rf
 	find o -name 'deps.x86_64' -delete
@@ -54,7 +59,7 @@ build-clean: zipclean
 	find o -name 'installed.aarch64' -delete
 	find o -name 'built.fat' -delete
 
-distclean: clean zipclean
+distclean: clean
 	git clean -f -d -x
 
-.PHONY: clean distclean zipclean build-clean
+.PHONY: clean distclean build-clean clean-cosmos clean-results
