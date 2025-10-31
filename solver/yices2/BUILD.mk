@@ -1,4 +1,4 @@
-YICES2_SRC := https://github.com/SRI-CSL/yices2/archive/refs/tags/Yices-2.6.5.tar.gz
+YICES2_SRC := https://github.com/SRI-CSL/yices2/archive/refs/tags/Yices-2.7.0.tar.gz
 YICES2_DEPS := lib/gmp solver/kissat
 
 $(eval $(call DOWNLOAD_SOURCE,solver/yices2,$(YICES2_SRC)))
