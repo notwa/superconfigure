@@ -247,10 +247,10 @@
  
  # needs -lncurses[w], sometimes -ltermcap/tinfo
 -@MODULE__CURSES_TRUE@_curses _cursesmodule.c
-+_curses _cursesmodule.c -lncurses -ltinfo
++_curses _cursesmodule.c -lncursesw -ltinfow
  # needs -lncurses[w] and -lpanel[w]
 -@MODULE__CURSES_PANEL_TRUE@_curses_panel _curses_panel.c
-+_curses_panel _curses_panel.c -lpanel -lncurses -ltinfo
++_curses_panel _curses_panel.c -lpanelw -lncursesw -ltinfow
  
 -@MODULE__SQLITE3_TRUE@_sqlite3 _sqlite/blob.c _sqlite/connection.c _sqlite/cursor.c _sqlite/microprotocols.c _sqlite/module.c _sqlite/prepare_protocol.c _sqlite/row.c _sqlite/statement.c _sqlite/util.c
 +_sqlite3 _sqlite/blob.c _sqlite/connection.c _sqlite/cursor.c _sqlite/microprotocols.c _sqlite/module.c _sqlite/prepare_protocol.c _sqlite/row.c _sqlite/statement.c _sqlite/util.c
@@ -299,31 +299,21 @@
 +# @MODULE_XXLIMITED_TRUE@xxlimited xxlimited.c
 +# @MODULE_XXLIMITED_35_TRUE@xxlimited_35 xxlimited_35.c
 --- cpython-3.12.3/Modules/socketmodule.c	2024-04-09 08:09:14.000000000 +0000
-+++ -	2024-05-27 02:28:22.885578188 +0000
-@@ -3548,7 +3548,7 @@
- Return the integer file descriptor of the socket.");
++++ -	2025-10-26 02:41:54.857764777 +0000
+@@ -110,6 +110,7 @@
+ #include "pycore_fileutils.h"     // _Py_set_inheritable()
+ #include "pycore_moduleobject.h"  // _PyModule_GetState
+ #include "structmember.h"         // PyMemberDef
++#include <cosmo.h>
  
- 
--#ifdef HAVE_GETSOCKNAME
-+#if 0 && HAVE_GETSOCKNAME
- /* s.getsockname() method */
- 
- static PyObject *
-@@ -5140,7 +5140,7 @@
-     {"getpeername",       (PyCFunction)sock_getpeername,
-                       METH_NOARGS, getpeername_doc},
+ #ifdef _Py_MEMORY_SANITIZER
+ # include <sanitizer/msan_interface.h>
+@@ -5443,7 +5444,7 @@
+                 if (family == -1 || CHECK_ERRNO(ENOTSOCK)) {
+ #else
+                 /* getsockname() is not supported for SOL_ALG on Linux. */
+-                if (family == -1 || CHECK_ERRNO(EBADF) || CHECK_ERRNO(ENOTSOCK)) {
++                if (family == -1 || (!IsWindows() && CHECK_ERRNO(EBADF)) || CHECK_ERRNO(ENOTSOCK)) {
  #endif
--#ifdef HAVE_GETSOCKNAME
-+#if 0 && HAVE_GETSOCKNAME
-     {"getsockname",       (PyCFunction)sock_getsockname,
-                       METH_NOARGS, getsockname_doc},
- #endif
-@@ -5430,7 +5430,7 @@
-             socklen_t addrlen = sizeof(sock_addr_t);
- 
-             memset(&addrbuf, 0, addrlen);
--#ifdef HAVE_GETSOCKNAME
-+#if 0 && HAVE_GETSOCKNAME
-             if (getsockname(fd, SAS2SA(&addrbuf), &addrlen) == 0) {
-                 if (family == -1) {
-                     family = SAS2SA(&addrbuf)->sa_family;
+                     set_error();
+                     return -1;
