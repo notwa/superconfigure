@@ -1,5 +1,5 @@
---- yices2-Yices-2.6.5/Makefile.build
-+++ yices2-Yices-2.6.5/Makefile.build
+--- yices2-yices-2.7.0/Makefile.build
++++ yices2-yices-2.7.0/Makefile.build
 @@ -496,9 +496,9 @@
  	$(MKDIR_P) $(DESTDIR)$(bindir)
  	$(MKDIR_P) $(DESTDIR)$(libdir)
@@ -13,8 +13,8 @@
  
  install-darwin: install-default
  	(cd $(DESTDIR)$(libdir) && $(LN_S) -f libyices.$(MAJOR).dylib libyices.dylib)
---- yices2-Yices-2.6.5/src/Makefile
-+++ yices2-Yices-2.6.5/src/Makefile
+--- yices2-yices-2.7.0/src/Makefile
++++ yices2-yices-2.7.0/src/Makefile
 @@ -1085,7 +1085,6 @@
  	-Wl,-soname,$(libyices_soname) -Wl,--no-undefined \
  	$(base_obj) $(version_obj) $(LIBS) -lc
@@ -118,8 +118,8 @@
  endif
  
  
---- yices2-Yices-2.6.5/src/utils/timeout.c
-+++ yices2-Yices-2.6.5/src/utils/timeout.c
+--- yices2-yices-2.7.0/src/utils/timeout.c
++++ yices2-yices-2.7.0/src/utils/timeout.c
 @@ -119,6 +119,7 @@
   *  UNIX/C99 IMPLEMENTATION  *
   ****************************/
